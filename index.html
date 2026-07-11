@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>زودياك — مطور برمجيات محترف</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #0F4C95;
+      --secondary: #3282D8;
+      --accent: #00D4FF;
+      --accent-warm: #FF6B6B;
+      --bg: #0a0e27;
+      --bg-light: #1a1f3a;
+      --text: #e8eef7;
+      --text-muted: #9ca3af;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-light: rgba(255, 255, 255, 0.12);
+    }
+
+    body {
+      background: linear-gradient(135deg, var(--bg) 0%, #1a1a2e 100%);
+      color: var(--text);
+      font-family: 'Cairo', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--secondary), var(--accent));
+      border-radius: 4px;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 1.2rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(20px);
+      background: rgba(10, 14, 39, 0.85);
+      border-bottom: 1px solid var(--border);
+      transition: all 0.3s ease;
+    }
+
+    nav.scrolled {
+      padding: 0.8rem 5%;
+      background: rgba(10, 14, 39, 0.95);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .logo {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 1.4rem;
+      background: linear-gradient(135deg, var(--secondary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 2px;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .nav-menu a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .nav-menu a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--secondary), var(--accent));
+      transition: width 0.3s ease;
+    }
+
+    .nav-menu a:hover {
+      color: var(--accent);
+    }
+
+    .nav-menu a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      background: linear-gradient(135deg, var(--secondary), var(--accent));
+      padding: 0.8rem 1.6rem;
+      border-radius: 50px;
+      color: white !important;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(50, 130, 216, 0.3);
+    }
+
+    .nav-cta::after {
+      display: none;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      padding: 140px 5% 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(50, 130, 216, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -20%;
+      left: -5%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-label {
+      display: inline-block;
+      padding: 0.6rem 1.4rem;
+      background: rgba(50, 130, 216, 0.15);
+      border: 1px solid var(--secondary);
+      border-radius: 50px;
+      color: var(--secondary);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      letter-spacing: 1px;
+    }
+
+    .hero-title {
+      font-size: clamp(3.5rem, 8vw, 6rem);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-desc {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin-bottom: 3rem;
+      line-height: 1.8;
+    }
+
+    .hero-desc strong {
+      color: var(--accent);
+    }
+
+    .hero-cta-row {
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      margin-bottom: 4rem;
+    }
+
+    .btn {
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--secondary), var(--accent));
+      color: white;
+      box-shadow: 0 10px 30px rgba(50, 130, 216, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(50, 130, 216, 0.4);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--accent);
+      border: 2px solid var(--accent);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(0, 212, 255, 0.1);
+      transform: translateY(-3px);
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-num {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--accent);
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+    }
+
+    /* ===== SECTION ===== */
+    .section {
+      padding: 100px 5%;
+      position: relative;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-size: 0.85rem;
+      color: var(--secondary);
+      font-weight: 700;
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      font-family: 'Poppins', sans-serif;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .section-title span {
+      background: linear-gradient(135deg, var(--secondary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 700px;
+      margin-bottom: 3rem;
+    }
+
+    /* ===== ABOUT ===== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      line-height: 1.8;
+    }
+
+    .about-text strong {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .skill-card {
+      background: var(--bg-light);
+      border: 1px solid var(--border-light);
+      padding: 1.5rem;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .skill-card:hover {
+      background: rgba(50, 130, 216, 0.1);
+      border-color: var(--secondary);
+      transform: translateY(-5px);
+    }
+
+    .skill-name {
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .skill-bar {
+      width: 100%;
+      height: 4px;
+      background: var(--border-light);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .skill-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--secondary), var(--accent));
+      border-radius: 4px;
+      transition: width 0.6s ease;
+    }
+
+    /* ===== SERVICES ===== */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .service-card {
+      background: linear-gradient(135deg, var(--bg-light), rgba(50, 130, 216, 0.05));
+      border: 1px solid var(--border-light);
+      padding: 2.5rem;
+      border-radius: 16px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at top right, rgba(0, 212, 255, 0.15), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .service-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 212, 255, 0.15);
+    }
+
+    .service-card:hover::before {
+      opacity: 1;
+    }
+
+    .service-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      perspective: 1200px;
+    }
+
+    .icon-3d {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 1.5rem;
+      perspective: 1200px;
+    }
+
+    .icon-3d svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 20px 40px rgba(50, 130, 216, 0.25));
+      animation: rotate3d 8s infinite linear;
+      transform-style: preserve-3d;
+    }
+
+    @keyframes rotate3d {
+      0% {
+        transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+      }
+      25% {
+        transform: rotateX(10deg) rotateY(20deg) rotateZ(5deg);
+      }
+      50% {
+        transform: rotateX(0deg) rotateY(40deg) rotateZ(0deg);
+      }
+      75% {
+        transform: rotateX(-10deg) rotateY(20deg) rotateZ(-5deg);
+      }
+      100% {
+        transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+      }
+    }
+
+    .service-card:hover .icon-3d svg {
+      animation: rotate3dHover 0.6s ease-out forwards;
+      filter: drop-shadow(0 25px 50px rgba(0, 212, 255, 0.35));
+    }
+
+    @keyframes rotate3dHover {
+      0% {
+        transform: scale(1) rotateX(0) rotateY(0) rotateZ(0);
+      }
+      50% {
+        transform: scale(1.1) rotateX(15deg) rotateY(30deg) rotateZ(10deg);
+      }
+      100% {
+        transform: scale(1.15) rotateX(10deg) rotateY(20deg) rotateZ(5deg);
+      }
+    }
+
+    .service-num {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      letter-spacing: 2px;
+    }
+
+    .service-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-bottom: 0.8rem;
+      color: var(--text);
+    }
+
+    .service-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .service-price {
+      display: inline-block;
+      padding: 0.6rem 1.2rem;
+      background: rgba(0, 212, 255, 0.1);
+      border: 1px solid var(--accent);
+      border-radius: 50px;
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    /* ===== PORTFOLIO ===== */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+
+    .portfolio-card {
+      background: var(--bg-light);
+      border: 1px solid var(--border-light);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .portfolio-link {
+      text-decoration: none;
+      display: block;
+      color: inherit;
+    }
+
+    .portfolio-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 212, 255, 0.1);
+    }
+
+    .portfolio-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 212, 255, 0.9);
+      color: #0a0e27;
+      padding: 0.8rem 1.6rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .portfolio-link:hover .portfolio-overlay {
+      opacity: 1;
+    }
+
+    .portfolio-icon-3d {
+      width: 120px;
+      height: 120px;
+      perspective: 1200px;
+    }
+
+    .portfolio-icon-3d svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 15px 35px rgba(50, 130, 216, 0.2));
+      animation: rotate3d-portfolio 10s infinite linear;
+      transform-style: preserve-3d;
+    }
+
+    @keyframes rotate3d-portfolio {
+      0% {
+        transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+      }
+      25% {
+        transform: rotateX(15deg) rotateY(25deg) rotateZ(8deg);
+      }
+      50% {
+        transform: rotateX(0deg) rotateY(45deg) rotateZ(0deg);
+      }
+      75% {
+        transform: rotateX(-15deg) rotateY(25deg) rotateZ(-8deg);
+      }
+      100% {
+        transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+      }
+    }
+
+    .portfolio-card:hover .portfolio-icon-3d svg {
+      animation: rotate3d-portfolio-hover 0.8s ease-out forwards;
+      filter: drop-shadow(0 20px 45px rgba(0, 212, 255, 0.35));
+    }
+
+    @keyframes rotate3d-portfolio-hover {
+      0% {
+        transform: scale(1) rotateX(0) rotateY(0) rotateZ(0);
+      }
+      50% {
+        transform: scale(1.15) rotateX(20deg) rotateY(35deg) rotateZ(12deg);
+      }
+      100% {
+        transform: scale(1.2) rotateX(15deg) rotateY(25deg) rotateZ(8deg);
+      }
+    }
+
+    .portfolio-card:hover .portfolio-image {
+      background: linear-gradient(135deg, rgba(50, 130, 216, 0.3), rgba(0, 212, 255, 0.3));
+    }
+
+    .portfolio-content {
+      padding: 2rem;
+    }
+
+    .portfolio-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .portfolio-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+
+    .portfolio-tags {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 0.4rem 0.9rem;
+      background: rgba(50, 130, 216, 0.2);
+      border: 1px solid var(--secondary);
+      border-radius: 20px;
+      font-size: 0.75rem;
+      color: var(--secondary);
+      font-weight: 600;
+    }
+
+    /* ===== PROCESS ===== */
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    .process-item {
+      background: var(--bg-light);
+      border: 1px solid var(--border-light);
+      padding: 2rem;
+      border-radius: 12px;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .process-item:hover {
+      border-color: var(--accent);
+      transform: translateY(-5px);
+    }
+
+    .process-num {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--secondary);
+      margin-bottom: 1rem;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .process-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      margin-bottom: 0.8rem;
+    }
+
+    .process-desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--bg-light);
+      border-top: 1px solid var(--border);
+      padding: 3rem 5%;
+      text-align: center;
+    }
+
+    .footer-title {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 2rem;
+      color: var(--text);
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .footer-link:hover {
+      color: var(--accent);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 2rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .float {
+      animation: float 3s ease-in-out infinite;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .portfolio-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .process-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .hero-stats {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      nav {
+        padding: 1rem 5%;
+      }
+
+      .nav-menu {
+        display: none;
+      }
+
+      .hero {
+        padding: 120px 5% 40px;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .process-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-cta-row {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="logo">ZODIAC</div>
+    <div class="nav-menu">
+      <a href="#about">عنّي</a>
+      <a href="#services">الخدمات</a>
+      <a href="#portfolio">أعمالي</a>
+      <a href="#footer">تواصل</a>
+      <a href="#contact" class="nav-cta">استشارة مجانية</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-label">مرحباً بك</div>
+      <h1 class="hero-title">أنا <span>زودياك</span> مطور برمجيات</h1>
+      <p class="hero-desc">
+        متخصص في بناء حلول رقمية احترافية لـ <strong>المتاجر والمطاعم والعيادات</strong> في العراق والوطن العربي. أنظمة إدارة قوية، مواقع سريعة، وتطبيقات مخصصة.
+      </p>
+      <div class="hero-cta-row">
+        <a href="#contact" class="btn btn-primary">ابدأ مشروعك الآن</a>
+        <a href="#portfolio" class="btn btn-secondary">شاهد أعمالي</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-num">50+</div>
+          <div class="stat-label">مشروع مكتمل</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">100%</div>
+          <div class="stat-label">رضا العملاء</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">3+ سنوات</div>
+          <div class="stat-label">خبرة احترافية</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="section-label">01. عنّي</div>
+    <h2 class="section-title">من أكون <span>و ماذا أفعل؟</span></h2>
+    <p class="section-desc">متخصص في بناء حلول رقمية متكاملة تجمع بين التصميم الجميل والأداء العالي والأمان الشديد.</p>
+
+    <div class="about-grid">
+      <div class="about-text">
+        <p>أنا <strong>زودياك</strong> من بغداد، العراق، مطور برمجيات متخصص في إنشاء <strong>أنظمة إدارة قوية ومتكاملة</strong> للشركات والمتاجر والمطاعم.</p>
+        <p>منذ 3+ سنوات أعمل على بناء حلول رقمية تحل مشاكل حقيقية: أنظمة فواتير آمنة، متاجر إلكترونية سريعة، بوتات تيليجرام ذكية، وتطبيقات حجوزات مخصصة.</p>
+        <p>فلسفتي بسيطة: <strong>كود نظيف، أداء عالي، دعم استثنائي.</strong></p>
+      </div>
+
+      <div class="skills-grid">
+        <div class="skill-card">
+          <div class="skill-name">
+            <span>Python</span>
+            <span style="color: var(--accent); font-size: 0.9rem;">85%</span>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-fill" style="width: 85%;"></div>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-name">
+            <span>C# .NET</span>
+            <span style="color: var(--accent); font-size: 0.9rem;">80%</span>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-fill" style="width: 80%;"></div>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-name">
+            <span>HTML/CSS/JS</span>
+            <span style="color: var(--accent); font-size: 0.9rem;">90%</span>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-fill" style="width: 90%;"></div>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-name">
+            <span>React</span>
+            <span style="color: var(--accent); font-size: 0.9rem;">70%</span>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-fill" style="width: 70%;"></div>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-name">
+            <span>Telegram Bot API</span>
+            <span style="color: var(--accent); font-size: 0.9rem;">88%</span>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-fill" style="width: 88%;"></div>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-name">
+            <span>قواعد البيانات</span>
+            <span style="color: var(--accent); font-size: 0.9rem;">75%</span>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-fill" style="width: 75%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="section" id="services">
+    <div class="section-label">02. الخدمات</div>
+    <h2 class="section-title">ماذا <span>أقدم؟</span></h2>
+    <p class="section-desc">حلول شاملة تغطي جميع احتياجاتك الرقمية من الويب إلى الأتمتة.</p>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon icon-3d">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="grad-globe" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#3282D8;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#00D4FF;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <circle cx="50" cy="50" r="45" fill="url(#grad-globe)" opacity="0.3"/>
+            <circle cx="50" cy="50" r="40" fill="none" stroke="url(#grad-globe)" stroke-width="2"/>
+            <circle cx="50" cy="20" r="3" fill="#00D4FF"/>
+            <circle cx="70" cy="40" r="3" fill="#00D4FF"/>
+            <circle cx="50" cy="70" r="3" fill="#00D4FF"/>
+            <path d="M 30 30 Q 50 25 70 35" fill="none" stroke="url(#grad-globe)" stroke-width="1.5"/>
+            <path d="M 25 50 Q 50 55 75 50" fill="none" stroke="url(#grad-globe)" stroke-width="1.5"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="url(#grad-globe)" stroke-width="1" opacity="0.5"/>
+          </svg>
+        </div>
+        <div class="service-num">01</div>
+        <div class="service-title">تطوير المواقع</div>
+        <div class="service-desc">مواقع احترافية سريعة ومتوافقة مع جميع الأجهزة للمطاعم والعيادات والمتاجر.</div>
+        <div class="service-price">$100 - $300</div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon icon-3d">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="grad-bot" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#3282D8;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#00D4FF;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <rect x="30" y="20" width="40" height="50" rx="5" fill="url(#grad-bot)"/>
+            <rect x="35" y="25" width="30" height="25" rx="2" fill="#0a0e27"/>
+            <circle cx="40" cy="32" r="2" fill="#00D4FF"/>
+            <circle cx="50" cy="32" r="2" fill="#00D4FF"/>
+            <circle cx="60" cy="32" r="2" fill="#00D4FF"/>
+            <rect x="42" y="55" width="6" height="12" fill="url(#grad-bot)"/>
+            <rect x="52" y="55" width="6" height="12" fill="url(#grad-bot)"/>
+            <circle cx="38" cy="45" r="1.5" fill="#00D4FF"/>
+            <circle cx="62" cy="45" r="1.5" fill="#00D4FF"/>
+          </svg>
+        </div>
+        <div class="service-num">02</div>
+        <div class="service-title">بوتات تيليجرام</div>
+        <div class="service-desc">بوتات ذكية للطلبات والحجوزات والاشتراكات مع إدارة متقدمة.</div>
+        <div class="service-price">$80 - $200</div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon icon-3d">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="grad-chart" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#3282D8;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#00D4FF;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <rect x="20" y="70" width="12" height="20" fill="url(#grad-chart)"/>
+            <rect x="35" y="55" width="12" height="35" fill="url(#grad-chart)"/>
+            <rect x="50" y="40" width="12" height="50" fill="url(#grad-chart)"/>
+            <rect x="65" y="50" width="12" height="40" fill="url(#grad-chart)"/>
+            <line x1="18" y1="72" x2="82" y2="72" stroke="url(#grad-chart)" stroke-width="2"/>
+            <line x1="18" y1="72" x2="18" y2="20" stroke="url(#grad-chart)" stroke-width="2"/>
+            <circle cx="26" cy="68" r="2" fill="#00D4FF"/>
+            <circle cx="41" cy="53" r="2" fill="#00D4FF"/>
+            <circle cx="56" cy="38" r="2" fill="#00D4FF"/>
+            <circle cx="71" cy="48" r="2" fill="#00D4FF"/>
+          </svg>
+        </div>
+        <div class="service-num">03</div>
+        <div class="service-title">أنظمة الإدارة</div>
+        <div class="service-desc">أنظمة فواتير وإدارة مخزون ومبيعات مع تشفير عالي الأمان.</div>
+        <div class="service-price">$200 - $500</div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon icon-3d">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="grad-cart" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#3282D8;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#00D4FF;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <path d="M 25 35 L 35 20 L 65 20 L 75 35 Z" fill="url(#grad-cart)"/>
+            <path d="M 30 35 L 28 60 Q 28 65 33 65 L 67 65 Q 72 65 72 60 L 70 35 Z" fill="url(#grad-cart)" opacity="0.8"/>
+            <circle cx="40" cy="70" r="3" fill="url(#grad-cart)"/>
+            <circle cx="60" cy="70" r="3" fill="url(#grad-cart)"/>
+            <line x1="45" y1="40" x2="45" y2="55" stroke="#00D4FF" stroke-width="1.5"/>
+            <line x1="55" y1="40" x2="55" y2="55" stroke="#00D4FF" stroke-width="1.5"/>
+            <line x1="40" y1="45" x2="60" y2="45" stroke="#00D4FF" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="service-num">04</div>
+        <div class="service-title">المتاجر الإلكترونية</div>
+        <div class="service-desc">متاجر كاملة مع كتالوج، سلة شراء، وتكامل دفع آمن.</div>
+        <div class="service-price">$150 - $400</div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon icon-3d">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="grad-gear" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#3282D8;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#00D4FF;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <circle cx="50" cy="50" r="15" fill="none" stroke="url(#grad-gear)" stroke-width="3"/>
+            <rect x="47" y="28" width="6" height="8" rx="1" fill="url(#grad-gear)"/>
+            <rect x="47" y="64" width="6" height="8" rx="1" fill="url(#grad-gear)"/>
+            <rect x="28" y="47" width="8" height="6" rx="1" fill="url(#grad-gear)"/>
+            <rect x="64" y="47" width="8" height="6" rx="1" fill="url(#grad-gear)"/>
+            <circle cx="50" cy="50" r="6" fill="url(#grad-gear)"/>
+            <circle cx="50" cy="50" r="3" fill="#0a0e27"/>
+            <circle cx="35" cy="35" r="4" fill="url(#grad-gear)" opacity="0.6"/>
+            <circle cx="65" cy="65" r="4" fill="url(#grad-gear)" opacity="0.6"/>
+          </svg>
+        </div>
+        <div class="service-num">05</div>
+        <div class="service-title">الأتمتة والسكربتات</div>
+        <div class="service-desc">حلول أتمتة مخصصة وسكربتات بايثون لاستخراج البيانات والتقارير.</div>
+        <div class="service-price">$30 - $150</div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon icon-3d">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="grad-wrench" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#3282D8;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#00D4FF;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <rect x="20" y="50" width="35" height="8" rx="4" fill="url(#grad-wrench)" transform="rotate(-30 38 54)"/>
+            <circle cx="60" cy="35" r="12" fill="none" stroke="url(#grad-wrench)" stroke-width="3"/>
+            <circle cx="60" cy="35" r="6" fill="url(#grad-wrench)"/>
+            <line x1="52" y1="27" x2="68" y2="43" stroke="url(#grad-wrench)" stroke-width="2" opacity="0.6"/>
+            <path d="M 70 30 L 80 20 L 85 25 L 75 35 Z" fill="url(#grad-wrench)"/>
+          </svg>
+        </div>
+        <div class="service-num">06</div>
+        <div class="service-title">الصيانة والدعم</div>
+        <div class="service-desc">خطط صيانة شهرية مع تحديثات وإصلاح أخطاء ودعم فني مستمر.</div>
+        <div class="service-price">$15 - $30 / شهرياً</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section class="section" id="portfolio">
+    <div class="section-label">03. أعمالي</div>
+    <h2 class="section-title">مشاريع <span>مختارة</span></h2>
+    <p class="section-desc">مجموعة من أفضل الأعمال التي نفذتها لعملائي.</p>
+
+    <div class="portfolio-grid">
+      <a href="https://zeusiq202.github.io/restaurant-demo/" target="_blank" class="portfolio-card portfolio-link">
+        <div class="portfolio-image portfolio-icon-3d">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="grad-fork" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#3282D8;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#00D4FF;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <path d="M 50 20 L 40 40 L 45 40 L 35 60 L 40 60 L 50 80 L 60 60 L 65 60 L 55 40 L 60 40 Z" fill="url(#grad-fork)" opacity="0.9"/>
+            <circle cx="35" cy="65" r="3" fill="#00D4FF" opacity="0.6"/>
+            <circle cx="65" cy="65" r="3" fill="#00D4FF" opacity="0.6"/>
+          </svg>
+          <div class="portfolio-overlay">اضغط للفتح</div>
+        </div>
+        <div class="portfolio-content">
+          <div class="portfolio-title">نظام إدارة مطعم</div>
+          <p class="portfolio-desc">نظام متكامل لإدارة الطلبات والحجوزات والموظفين.</p>
+          <div class="portfolio-tags">
+            <span class="tag">HTML/CSS</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">قاعدة بيانات</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="https://zeusiq202.github.io/salon-demo/" target="_blank" class="portfolio-card portfolio-link">
+        <div class="portfolio-image portfolio-icon-3d">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="grad-scissors" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#3282D8;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#00D4FF;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <circle cx="35" cy="30" r="8" fill="none" stroke="url(#grad-scissors)" stroke-width="2.5"/>
+            <circle cx="65" cy="30" r="8" fill="none" stroke="url(#grad-scissors)" stroke-width="2.5"/>
+            <path d="M 40 35 Q 50 50 40 65" fill="none" stroke="url(#grad-scissors)" stroke-width="2.5"/>
+            <path d="M 60 35 Q 50 50 60 65" fill="none" stroke="url(#grad-scissors)" stroke-width="2.5"/>
+            <line x1="35" y1="30" x2="35" y2="20" stroke="url(#grad-scissors)" stroke-width="1.5" opacity="0.5"/>
+          </svg>
+          <div class="portfolio-overlay">اضغط للفتح</div>
+        </div>
+        <div class="portfolio-content">
+          <div class="portfolio-title">نظام إدارة صالون</div>
+          <p class="portfolio-desc">تطبيق لإدارة المواعيد والعملاء والخدمات.</p>
+          <div class="portfolio-tags">
+            <span class="tag">HTML/CSS</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">حجوزات ذكية</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="https://zeusiq202.github.io/wedding-hall-demo/" target="_blank" class="portfolio-card portfolio-link">
+        <div class="portfolio-image portfolio-icon-3d">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="grad-ring" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#3282D8;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#00D4FF;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <ellipse cx="50" cy="50" rx="20" ry="30" fill="none" stroke="url(#grad-ring)" stroke-width="3"/>
+            <circle cx="50" cy="25" r="6" fill="url(#grad-ring)"/>
+            <path d="M 35 45 Q 30 50 35 65" fill="none" stroke="url(#grad-ring)" stroke-width="2" opacity="0.7"/>
+            <path d="M 65 45 Q 70 50 65 65" fill="none" stroke="url(#grad-ring)" stroke-width="2" opacity="0.7"/>
+            <polygon points="45,35 50,32 55,35" fill="url(#grad-ring)" opacity="0.8"/>
+          </svg>
+          <div class="portfolio-overlay">اضغط للفتح</div>
+        </div>
+        <div class="portfolio-content">
+          <div class="portfolio-title">موقع حجز قاعات أفراح</div>
+          <p class="portfolio-desc">موقع احترافي لعرض القاعات وحجز المناسبات.</p>
+          <div class="portfolio-tags">
+            <span class="tag">HTML/CSS</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">استجابي</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="https://zeusiq202.github.io/clinic-demo/" target="_blank" class="portfolio-card portfolio-link">
+        <div class="portfolio-image portfolio-icon-3d">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="grad-hospital" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#3282D8;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#00D4FF;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <rect x="25" y="20" width="50" height="60" rx="5" fill="url(#grad-hospital)"/>
+            <rect x="30" y="25" width="40" height="50" fill="#0a0e27"/>
+            <g fill="url(#grad-hospital)">
+              <rect x="42" y="35" width="4" height="20"/>
+              <rect x="37" y="43" width="16" height="4"/>
+              <rect x="55" y="50" width="8" height="15"/>
+              <rect x="55" y="55" width="8" height="5" opacity="0.6"/>
+            </g>
+            <circle cx="35" cy="75" r="2.5" fill="#00D4FF"/>
+            <circle cx="65" cy="75" r="2.5" fill="#00D4FF"/>
+          </svg>
+          <div class="portfolio-overlay">اضغط للفتح</div>
+        </div>
+        <div class="portfolio-content">
+          <div class="portfolio-title">بوابة عيادة طبية</div>
+          <p class="portfolio-desc">منصة حجز المواعيد والتشاور مع الأطباء.</p>
+          <div class="portfolio-tags">
+            <span class="tag">HTML/CSS</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">نظام حجز</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="https://zeusiq202.github.io/gym-demo/" target="_blank" class="portfolio-card portfolio-link">
+        <div class="portfolio-image portfolio-icon-3d">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="grad-dumbbell" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#3282D8;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#00D4FF;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <rect x="20" y="45" width="12" height="30" rx="2" fill="url(#grad-dumbbell)"/>
+            <rect x="68" y="45" width="12" height="30" rx="2" fill="url(#grad-dumbbell)"/>
+            <rect x="35" y="35" width="30" height="40" rx="3" fill="url(#grad-dumbbell)" opacity="0.8"/>
+            <rect x="38" y="38" width="24" height="34" fill="#0a0e27" opacity="0.5"/>
+            <line x1="15" y1="60" x2="85" y2="60" stroke="url(#grad-dumbbell)" stroke-width="2"/>
+            <circle cx="26" cy="60" r="3" fill="#00D4FF" opacity="0.6"/>
+            <circle cx="74" cy="60" r="3" fill="#00D4FF" opacity="0.6"/>
+          </svg>
+          <div class="portfolio-overlay">اضغط للفتح</div>
+        </div>
+        <div class="portfolio-content">
+          <div class="portfolio-title">موقع نادي رياضي</div>
+          <p class="portfolio-desc">منصة عضويات وبرامج تدريب وجدولة الفصول.</p>
+          <div class="portfolio-tags">
+            <span class="tag">HTML/CSS</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">عضوية</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="https://zeusiq202.github.io/store-demo/" target="_blank" class="portfolio-card portfolio-link">
+        <div class="portfolio-image portfolio-icon-3d">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="grad-store" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#3282D8;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#00D4FF;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <path d="M 20 30 L 30 15 L 70 15 L 80 30 Z" fill="url(#grad-store)"/>
+            <rect x="22" y="30" width="56" height="45" fill="url(#grad-store)" opacity="0.9"/>
+            <rect x="30" y="35" width="12" height="15" fill="rgba(0,212,255,0.3)" stroke="url(#grad-store)" stroke-width="1"/>
+            <rect x="46" y="35" width="12" height="15" fill="rgba(0,212,255,0.3)" stroke="url(#grad-store)" stroke-width="1"/>
+            <rect x="62" y="35" width="12" height="15" fill="rgba(0,212,255,0.3)" stroke="url(#grad-store)" stroke-width="1"/>
+            <line x1="20" y1="60" x2="80" y2="60" stroke="url(#grad-store)" stroke-width="1.5" opacity="0.5"/>
+            <circle cx="28" cy="75" r="2" fill="#00D4FF"/>
+            <circle cx="72" cy="75" r="2" fill="#00D4FF"/>
+          </svg>
+          <div class="portfolio-overlay">اضغط للفتح</div>
+        </div>
+        <div class="portfolio-content">
+          <div class="portfolio-title">متجر إلكتروني</div>
+          <p class="portfolio-desc">منصة تسوق كاملة مع كتالوج منتجات وسلة شراء.</p>
+          <div class="portfolio-tags">
+            <span class="tag">HTML/CSS</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">دفع آمن</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="section">
+    <div class="section-label">04. منهجيتي</div>
+    <h2 class="section-title">كيفية <span>عملي</span></h2>
+    <p class="section-desc">عملية واضحة ومنظمة من البداية حتى النهاية.</p>
+
+    <div class="process-grid">
+      <div class="process-item">
+        <div class="process-num">01</div>
+        <div class="process-title">الاستكشاف</div>
+        <div class="process-desc">فهم احتياجاتك وأهدافك ومتطلبات المشروع بالتفصيل.</div>
+      </div>
+
+      <div class="process-item">
+        <div class="process-num">02</div>
+        <div class="process-title">التخطيط</div>
+        <div class="process-desc">تصميم الحل والهندسة المعمارية وخطة التنفيذ.</div>
+      </div>
+
+      <div class="process-item">
+        <div class="process-num">03</div>
+        <div class="process-title">التطوير</div>
+        <div class="process-desc">كتابة كود نظيف واختبار شامل مع ضمان الأداء.</div>
+      </div>
+
+      <div class="process-item">
+        <div class="process-num">04</div>
+        <div class="process-title">الإطلاق</div>
+        <div class="process-desc">نشر المشروع والدعم المستمر والصيانة الدورية.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section" id="contact">
+    <div class="section-label">05. تواصل معي</div>
+    <h2 class="section-title">هل لديك <span>مشروع في بالك؟</span></h2>
+    <p class="section-desc">اتصل بي الآن واحصل على استشارة مجانية لمشروعك.</p>
+
+    <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 2rem;">
+      <a href="https://t.me/zodiac" target="_blank" class="btn btn-primary">Telegram</a>
+      <a href="https://wa.me/9647XXXXXXXXX" target="_blank" class="btn btn-primary">WhatsApp</a>
+      <a href="mailto:zodiac@mail.com" class="btn btn-secondary">البريد الإلكتروني</a>
+      <a href="https://github.com/zodiac" target="_blank" class="btn btn-secondary">GitHub</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="footer">
+    <div class="footer-title">ZODIAC</div>
+    <div class="footer-links">
+      <a href="#about" class="footer-link">عنّي</a>
+      <a href="#services" class="footer-link">الخدمات</a>
+      <a href="#portfolio" class="footer-link">أعمالي</a>
+      <a href="#contact" class="footer-link">تواصل</a>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 زودياك — بغداد، العراق. جميع الحقوق محفوظة.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Smooth scroll nav highlight
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Intersection Observer for animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    // Observe all cards
+    document.querySelectorAll('.service-card, .portfolio-card, .process-item, .skill-card').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
+    });
+
+    // Number animation for stats
+    const animateValue = (element, start, end, duration) => {
+      let startTimestamp = null;
+      const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        const value = Math.floor(progress * (end - start) + start);
+        element.textContent = value;
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        }
+      };
+      window.requestAnimationFrame(step);
+    };
+
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !entry.target.animated) {
+          entry.target.animated = true;
+          const numbers = entry.target.querySelectorAll('.stat-num');
+          numbers.forEach(num => {
+            const finalValue = parseInt(num.textContent);
+            animateValue(num, 0, finalValue, 2000);
+          });
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.hero-stats').forEach(el => statsObserver.observe(el));
+
+    // Smooth scroll for nav links
+    document.querySelectorAll('.nav-menu a, .footer-links a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (href.startsWith('#')) {
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
